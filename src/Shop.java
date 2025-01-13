@@ -81,11 +81,11 @@ public class Shop {
      * @return the string representing the shop's items available for purchase and their prices.
      */
     public String inventory() {
-        String str = "Water: " + WATER_COST + " gold\n";
-        str += "Rope: " + ROPE_COST + " gold\n";
-        str += "Machete: " + MACHETE_COST + " gold\n";
-        str += "Horse: " + HORSE_COST + " gold\n";
-        str += "Boat: " + BOAT_COST + " gold\n";
+        String str = Color.ANSI_BLUE + "Water: " + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += "Rope: " + ROPE_COST + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += Color.ANSI_RED + "Machete: " + Color.ANSI_RED + MACHETE_COST  + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += "Horse: "  + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += "Boat: "  + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         return str;
     }
 
