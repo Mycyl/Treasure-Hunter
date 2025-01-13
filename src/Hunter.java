@@ -130,7 +130,7 @@ public class Hunter {
 
         for (String item : kit) {
             if (item != null) {
-                printableKit += item + space;
+                printableKit += Color.ANSI_PURPLE + item + Color.ANSI_RESET + space;
             }
         }
         return printableKit;
