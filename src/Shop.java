@@ -83,7 +83,7 @@ public class Shop {
     public String inventory() {
         String str = Color.ANSI_BLUE + "Water: " + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         str += "Rope: " + ROPE_COST + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
-        str += Color.ANSI_RED + "Machete: " + Color.ANSI_RED + MACHETE_COST  + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += Color.ANSI_RED + "Machete: "   + Color.ANSI_RESET + MACHETE_COST + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         str += "Horse: "  + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         str += "Boat: "  + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         return str;
