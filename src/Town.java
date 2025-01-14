@@ -89,7 +89,7 @@ public class Town {
      * The chances of finding a fight and winning the gold are based on the toughness of the town.<p>
      * The tougher the town, the easier it is to find a fight, and the harder it is to win one.
      */
-    public void lookForTrouble() {
+    public boolean lookForTrouble() {
         double noTroubleChance;
         if (toughTown) {
             noTroubleChance = 0.66;
@@ -109,8 +109,12 @@ public class Town {
                 printMessage += "That'll teach you to go lookin' fer trouble in MY town! Now pay up!";
                 printMessage += "\nYou lost the brawl and pay " + Color.ANSI_YELLOW + goldDiff + " gold." +Color.ANSI_RESET;
                 hunter.changeGold(-goldDiff);
+                if (hunter.getGold() < 0) {
+                    return true;
+                }
             }
         }
+        return false;
     }
 
     public String infoString() {

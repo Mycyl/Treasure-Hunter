@@ -20,6 +20,8 @@ public class TreasureHunter {
     private Hunter hunter;
     private boolean hardMode;
     private boolean testMode;
+    private boolean testLoseMode;
+    private boolean gameLost;
 
 
     /**
@@ -63,6 +65,8 @@ public class TreasureHunter {
             hardMode = true;
         } else if (hard.equals("test")) {
             testMode = true;
+        } else if (hard.equals("test lose")) {
+            testLoseMode = true;
         }
 
 
@@ -71,6 +75,8 @@ public class TreasureHunter {
         } else if (testMode) {
             hunter = new Hunter(name, 100);
             hunter.populateKit();
+        } else if (testLoseMode) {
+            hunter = new Hunter(name, 10);
         }
     }
 
@@ -88,6 +94,8 @@ public class TreasureHunter {
 
             // and the town is "tougher"
             toughness = 0.75;
+        } else if (testLoseMode) {
+            toughness = 0.9;
         }
 
 
@@ -121,6 +129,9 @@ public class TreasureHunter {
         while (!choice.equals("x")) {
             System.out.println();
             System.out.println(currentTown.getLatestNews());
+            if (gameLost) {
+                break;
+            }
             System.out.println("***");
             System.out.println(hunter.infoString());
             System.out.println(currentTown.infoString());
@@ -133,7 +144,10 @@ public class TreasureHunter {
             System.out.println();
             System.out.print("What's your next move? ");
             choice = SCANNER.nextLine().toLowerCase();
-            processChoice(choice);
+            gameLost = processChoice(choice);
+        }
+        if (gameLost) {
+            System.out.println("You lost all your money and went into debt! You Lose!");
         }
     }
 
@@ -142,7 +156,7 @@ public class TreasureHunter {
      * Takes the choice received from the menu and calls the appropriate method to carry out the instructions.
      * @param choice The action to process.
      */
-    private void processChoice(String choice) {
+    private boolean processChoice(String choice) {
         if (choice.equals("b") || choice.equals("s")) {
             currentTown.enterShop(choice);
         } else if (choice.equals("e")) {
@@ -154,11 +168,15 @@ public class TreasureHunter {
                 enterTown();
             }
         } else if (choice.equals("l")) {
-            currentTown.lookForTrouble();
+            boolean gameLost = currentTown.lookForTrouble();
+            if (gameLost) {
+                return true;
+            }
         } else if (choice.equals("x")) {
             System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
         } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
+        return false;
     }
 }
