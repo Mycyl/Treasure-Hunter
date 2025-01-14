@@ -4,11 +4,13 @@
  * This code has been adapted from Ivan Turner's original program -- thank you Mr. Turner!
  */
 
+
 public class Hunter {
     //instance variables
     private String hunterName;
     private String[] kit;
     private int gold;
+
 
     /**
      * The base constructor of a Hunter assigns the name to the hunter and an empty kit.
@@ -22,10 +24,21 @@ public class Hunter {
         gold = startingGold;
     }
 
+
+    public void populateKit () {
+        addItem("water");
+        addItem("rope");
+        addItem("machete");
+        addItem("horse");
+        addItem("boat");
+    }
+
+
     //Accessors
     public String getHunterName() {
         return hunterName;
     }
+
 
     /**
      * Updates the amount of gold the hunter has.
@@ -38,6 +51,7 @@ public class Hunter {
             gold = 0;
         }
     }
+
 
     /**
      * Buys an item from a shop.
@@ -54,6 +68,7 @@ public class Hunter {
         addItem(item);
         return true;
     }
+
 
     /**
      * The Hunter is selling an item to a shop for gold.<p>
@@ -72,6 +87,7 @@ public class Hunter {
         return true;
     }
 
+
     /**
      * Removes an item from the kit by setting the index of the item to null.
      *
@@ -80,11 +96,13 @@ public class Hunter {
     public void removeItemFromKit(String item) {
         int itmIdx = findItemInKit(item);
 
+
         // if item is found
         if (itmIdx >= 0) {
             kit[itmIdx] = null;
         }
     }
+
 
     /**
      * Checks to make sure that the item is not already in the kit.
@@ -102,6 +120,7 @@ public class Hunter {
         return false;
     }
 
+
     /**
      * Checks if the kit Array has the specified item.
      *
@@ -118,7 +137,8 @@ public class Hunter {
         return false;
     }
 
-     /**
+
+    /**
      * Returns a printable representation of the inventory, which
      * is a list of the items in kit, with a space between each item.
      *
@@ -128,6 +148,7 @@ public class Hunter {
         String printableKit = "";
         String space = " ";
 
+
         for (String item : kit) {
             if (item != null) {
                 printableKit += Color.ANSI_PURPLE + item + Color.ANSI_RESET + space;
@@ -135,6 +156,7 @@ public class Hunter {
         }
         return printableKit;
     }
+
 
     /**
      * @return A string representation of the hunter.
@@ -147,6 +169,7 @@ public class Hunter {
         return str;
     }
 
+
     /**
      * Searches kit Array for the index of the specified value.
      *
@@ -157,12 +180,14 @@ public class Hunter {
         for (int i = 0; i < kit.length; i++) {
             String tmpItem = kit[i];
 
+
             if (item.equals(tmpItem)) {
                 return i;
             }
         }
         return -1;
     }
+
 
     /**
      * Check if the kit is empty - meaning all elements are null.
@@ -177,6 +202,7 @@ public class Hunter {
         }
         return true;
     }
+
 
     /**
      * Finds the first index where there is a null value.
