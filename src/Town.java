@@ -1,10 +1,9 @@
-import java.util.Random;
-
 /**
  * The Town Class is where it all happens.
  * The Town is designed to manage all the things a Hunter can do in town.
  * This code has been adapted from Ivan Turner's original program -- thank you Mr. Turner!
  */
+
 
 public class Town {
     // instance variables
@@ -13,6 +12,10 @@ public class Town {
     private Terrain terrain;
     private String printMessage;
     private boolean toughTown;
+    private String treasure;
+    private String[] treasureList;
+    private boolean searchedForTreasure;
+    public static String[] treasureCollected = new String[3];
     private boolean hasDugInCurrentTown = false;
 
     /**
@@ -24,6 +27,9 @@ public class Town {
     public Town(Shop shop, double toughness) {
         this.shop = shop;
         this.terrain = getNewTerrain();
+        searchedForTreasure = false;
+        treasureList = new String[] {"crown", "trophy", "gem", "dust"};
+        treasure = treasureList[(int) (Math.random() * (4))];
 
         // the hunter gets set using the hunterArrives method, which
         // gets called from a client class
@@ -34,12 +40,61 @@ public class Town {
         toughTown = (Math.random() < toughness);
     }
 
+    public void resetPrintMessage () {
+        printMessage = "";
+    }
+
     public Terrain getTerrain() {
         return terrain;
     }
 
     public String getLatestNews() {
         return printMessage;
+    }
+
+    public void searchForTreasure () {
+        resetPrintMessage();
+        if (!searchedForTreasure) {
+            searchedForTreasure = true;
+
+            if (!treasureFoundAlready(treasure)) {
+                if (freeIndex() != -1 && !treasure.equals("dust")) {
+                    treasureCollected[freeIndex()] = treasure;
+                }
+                printMessage += "\nyou found a " + treasure + " !";
+            } else {
+                printMessage += "\nyou have found a " + treasure + " already!";
+            }
+        } else {
+            printMessage += "\nyou have already searched this town";
+        }
+    }
+
+    public int freeIndex () {
+        for (int i = 0; i < treasureCollected.length; i++) {
+            if (treasureCollected[i] == null) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean treasureFoundAlready (String treasure) {
+        for (int i = 0; i < treasureCollected.length; i++) {
+            if (treasureCollected[i] != null && treasureCollected[i].equals(treasure)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean userWon () {
+        for (int i = 0; i < treasureCollected.length; i++) {
+            if (treasureCollected[i] == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -62,12 +117,12 @@ public class Town {
      *
      * @return true if the Hunter was able to leave town.
      */
-    public boolean leaveTown() {
+    public boolean leaveTown(boolean easyMode) {
         boolean canLeaveTown = terrain.canCrossTerrain(hunter);
         if (canLeaveTown) {
             String item = terrain.getNeededItem();
             printMessage = "You used your " + item + " to cross the " + terrain.getTerrainName() + ".";
-            if (checkItemBreak()) {
+            if (!easyMode && checkItemBreak()) {
                 hunter.removeItemFromKit(item);
                 printMessage += "\nUnfortunately, you lost your " + item;
             }
@@ -120,6 +175,10 @@ public class Town {
         return false;
     }
 
+    private boolean hasTreasure () {
+        return treasureCollected[0] != null;
+    }
+
     public void setDugInTown(boolean status){
         this.hasDugInCurrentTown = status;
     }
@@ -127,34 +186,44 @@ public class Town {
         return this.hasDugInCurrentTown;
     }
 
-    public String digForGold() {
-        setDugInTown(true);
-        if (!hunter.hasItemInKit("shovel")) {
-            return "You can't dig for gold witout a shovel.";
-        }
-        if (hasDugInTown()) {
-            return "You already dug for gold in this town.";
-        }
-        Random randomNum = new Random();
-        double rnd = Math.random();
-        double rnd2 = Math.random();
-        if (hunter.hasItemInKit("shovel")) {
-            if (rnd > 0.5) {
-                int goldAmount = randomNum.nextInt(20);
-                hunter.changeGold(goldAmount);
-                return "You dug up" + goldAmount + "gold";
-            } else {
-                return "You dug but only found dirt.";
-            }
-        } else {
-            return "You can't dig for gold without a shovel";
-        }
-
-    }
+//    public String digForGold() {
+//        setDugInTown(true);
+//        if (!hunter.hasItemInKit("shovel")) {
+//            return "You can't dig for gold witout a shovel.";
+//        }
+//        if (hasDugInTown()) {
+//            return "You already dug for gold in this town.";
+//        }
+////        Random randomNum = new Random();
+////        double rnd = Math.random();
+////        double rnd2 = Math.random();
+////        if (hunter.hasItemInKit("shovel")) {
+////            if (rnd > 0.5) {
+////                int goldAmount = randomNum.nextInt(20);
+////                hunter.changeGold(goldAmount);
+////                return "You dug up" + goldAmount + "gold";
+//            } else {
+//                return "You dug but only found dirt.";
+//            }
+//        } else {
+//            return "You can't dig for gold without a shovel";
+//        }
+//
+//    }
 
 
     public String infoString() {
-        return "This nice little town is surrounded by " + terrain.getTerrainName() + ".";
+        String infoString = "";
+        if (hasTreasure()) {
+            infoString += "Treasures found:";
+            for (int i = 0; i < treasureCollected.length && !(treasureCollected[i] == null); i++) {
+                infoString += " a " + treasureCollected[i];
+            }
+        } else {
+            infoString += "Treasures found: none";
+        }
+        infoString += "\nThis nice little town is surrounded by " + terrain.getTerrainName() + ".";
+        return infoString;
     }
 
     /**
