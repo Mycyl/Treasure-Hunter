@@ -13,6 +13,8 @@ public class Shop {
     private static final int MACHETE_COST = 6;
     private static final int HORSE_COST = 12;
     private static final int BOAT_COST = 20;
+    private static final int BOOTS_COST = 15;
+
 
     // static variables
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -82,10 +84,11 @@ public class Shop {
      */
     public String inventory() {
         String str = Color.ANSI_BLUE + "Water: " + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
-        str += "Rope: " + ROPE_COST + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
-        str += Color.ANSI_RED + "Machete: "   + Color.ANSI_RESET + MACHETE_COST + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
-        str += "Horse: "  + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
-        str += "Boat: "  + Color.ANSI_RESET + WATER_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += "Rope: " + ROPE_COST + Color.ANSI_RESET + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += Color.ANSI_RED + "Machete: "   + Color.ANSI_RESET + MACHETE_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += "Horse: "  + Color.ANSI_RESET + HORSE_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += "Boat: "  + Color.ANSI_RESET + BOAT_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += "Boots: "  + Color.ANSI_RESET + BOOTS_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         return str;
     }
 
@@ -149,6 +152,8 @@ public class Shop {
             return HORSE_COST;
         } else if (item.equals("boat")) {
             return BOAT_COST;
+        } else if (item.equals("boots")) {
+            return BOOTS_COST;
         } else {
             return 0;
         }
