@@ -11,6 +11,10 @@ public class Town {
     private Terrain terrain;
     private String printMessage;
     private boolean toughTown;
+    private String treasure;
+    private String[] treasureList;
+    private boolean searchedForTreasure;
+    public static String[] treasureCollected = new String[4];
 
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
@@ -21,6 +25,9 @@ public class Town {
     public Town(Shop shop, double toughness) {
         this.shop = shop;
         this.terrain = getNewTerrain();
+        searchedForTreasure = false;
+        treasureList = new String[] {"crown", "trophy", "gem", "dust"};
+        treasure = treasureList[(int) (Math.random() * (4))];
 
         // the hunter gets set using the hunterArrives method, which
         // gets called from a client class
@@ -31,12 +38,52 @@ public class Town {
         toughTown = (Math.random() < toughness);
     }
 
+    public void resetPrintMessage () {
+        printMessage = "";
+    }
+
     public Terrain getTerrain() {
         return terrain;
     }
 
     public String getLatestNews() {
         return printMessage;
+    }
+
+    public void searchForTreasure () {
+        resetPrintMessage();
+        if (!searchedForTreasure) {
+            searchedForTreasure = true;
+
+            if (!treasureFoundAlready(treasure)) {
+                if (freeIndex() != -1 && !treasure.equals("dust")) {
+                    treasureCollected[freeIndex()] = treasure;
+                }
+            } else {
+                printMessage += "\nyou have found a " + treasure + " already!";
+            }
+            printMessage += "\nyou found a " + treasure + " !";
+        } else {
+            printMessage += "\nyou have already searched this town";
+        }
+    }
+
+    public int freeIndex () {
+        for (int i = 0; i < treasureCollected.length; i++) {
+            if (treasureCollected[i] == null) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean treasureFoundAlready (String treasure) {
+        for (int i = 0; i < treasureCollected.length; i++) {
+            if (treasureCollected[i] != null && treasureCollected[i].equals(treasure)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

@@ -77,6 +77,8 @@ public class TreasureHunter {
             hunter.populateKit();
         } else if (testLoseMode) {
             hunter = new Hunter(name, 10);
+        } else {
+            hunter = new Hunter(name, 100);
         }
     }
 
@@ -140,11 +142,13 @@ public class TreasureHunter {
             System.out.println("(E)xplore surrounding terrain.");
             System.out.println("(M)ove on to a different town.");
             System.out.println("(L)ook for trouble!");
+            System.out.println("(H)unt for treasure.");
             System.out.println("Give up the hunt and e(X)it.");
             System.out.println();
             System.out.print("What's your next move? ");
             choice = SCANNER.nextLine().toLowerCase();
             gameLost = processChoice(choice);
+            //currentTown.resetPrintMessage();
         }
         if (gameLost) {
             System.out.println("You lost all your money and went into debt! You Lose!");
@@ -174,7 +178,9 @@ public class TreasureHunter {
             }
         } else if (choice.equals("x")) {
             System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
-        } else {
+        } else if (choice.equals("h")) {
+            currentTown.searchForTreasure();
+        }else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
         return false;
