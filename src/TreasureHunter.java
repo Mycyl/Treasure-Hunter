@@ -23,6 +23,8 @@ public class TreasureHunter {
     private boolean testLoseMode;
     private boolean gameLost;
     private boolean gameWon;
+    private boolean normalMode;
+    private boolean easyMode;
 
 
     /**
@@ -60,14 +62,18 @@ public class TreasureHunter {
         // set hunter instance variable
 
 
-        System.out.print("Hard mode? (y/n): ");
-        String hard = SCANNER.nextLine().toLowerCase();
-        if (hard.equals("y")) {
+        System.out.print("Please pick the mode | easy, normal, hard? (e/n/h): ");
+        String option = SCANNER.nextLine().toLowerCase();
+        if (option.equals("h")) {
             hardMode = true;
-        } else if (hard.equals("test")) {
+        } else if (option.equals("test")) {
             testMode = true;
-        } else if (hard.equals("test lose")) {
+        } else if (option.equals("test lose")) {
             testLoseMode = true;
+        } else if (option.equals("e")) {
+            easyMode = true;
+        } else if (option.equals("n")) {
+            normalMode = true;
         }
 
 
@@ -78,8 +84,10 @@ public class TreasureHunter {
             hunter.populateKit();
         } else if (testLoseMode) {
             hunter = new Hunter(name, 10);
-        } else {
-            hunter = new Hunter(name, 100);
+        } else if (easyMode) {
+            hunter = new Hunter(name, 40);
+        } else if (normalMode) {
+            hunter = new Hunter (name, 30);
         }
     }
 
@@ -99,6 +107,10 @@ public class TreasureHunter {
             toughness = 0.75;
         } else if (testLoseMode) {
             toughness = 0.9;
+            markdown = 0.9;
+        } else if (easyMode) {
+            toughness = 0.4;
+            markdown = 1;
         }
 
 
@@ -171,7 +183,7 @@ public class TreasureHunter {
         } else if (choice.equals("e")) {
             System.out.println(currentTown.getTerrain().infoString());
         } else if (choice.equals("m")) {
-            if (currentTown.leaveTown()) {
+            if (currentTown.leaveTown(easyMode)) {
                 // This town is going away so print its news ahead of time.
                 System.out.println(currentTown.getLatestNews());
                 enterTown();
