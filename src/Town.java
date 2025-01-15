@@ -164,8 +164,22 @@ public class Town {
         return false;
     }
 
+    private boolean hasTreasure () {
+        return treasureCollected[0] != null;
+    }
+
     public String infoString() {
-        return "This nice little town is surrounded by " + terrain.getTerrainName() + ".";
+        String infoString = "";
+        if (hasTreasure()) {
+            infoString += "Treasures found:";
+            for (int i = 0; i < treasureCollected.length && !(treasureCollected[i] == null); i++) {
+                infoString += " a " + treasureCollected[i] + " ";
+            }
+        } else {
+            infoString += "Treasures found: none";
+        }
+        infoString += "\nThis nice little town is surrounded by " + terrain.getTerrainName() + ".";
+        return infoString;
     }
 
     /**
