@@ -14,7 +14,7 @@ public class Town {
     private String treasure;
     private String[] treasureList;
     private boolean searchedForTreasure;
-    public static String[] treasureCollected = new String[4];
+    public static String[] treasureCollected = new String[3];
 
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
@@ -59,10 +59,10 @@ public class Town {
                 if (freeIndex() != -1 && !treasure.equals("dust")) {
                     treasureCollected[freeIndex()] = treasure;
                 }
+                printMessage += "\nyou found a " + treasure + " !";
             } else {
                 printMessage += "\nyou have found a " + treasure + " already!";
             }
-            printMessage += "\nyou found a " + treasure + " !";
         } else {
             printMessage += "\nyou have already searched this town";
         }
@@ -84,6 +84,15 @@ public class Town {
             }
         }
         return false;
+    }
+
+    public boolean userWon () {
+        for (int i = 0; i < treasureCollected.length; i++) {
+            if (treasureCollected[i] == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -173,7 +182,7 @@ public class Town {
         if (hasTreasure()) {
             infoString += "Treasures found:";
             for (int i = 0; i < treasureCollected.length && !(treasureCollected[i] == null); i++) {
-                infoString += " a " + treasureCollected[i] + " ";
+                infoString += " a " + treasureCollected[i];
             }
         } else {
             infoString += "Treasures found: none";

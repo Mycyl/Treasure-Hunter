@@ -22,6 +22,7 @@ public class TreasureHunter {
     private boolean testMode;
     private boolean testLoseMode;
     private boolean gameLost;
+    private boolean gameWon;
 
 
     /**
@@ -131,7 +132,7 @@ public class TreasureHunter {
         while (!choice.equals("x")) {
             System.out.println();
             System.out.println(currentTown.getLatestNews());
-            if (gameLost) {
+            if (gameLost || gameWon) {
                 break;
             }
             System.out.println("***");
@@ -148,10 +149,14 @@ public class TreasureHunter {
             System.out.print("What's your next move? ");
             choice = SCANNER.nextLine().toLowerCase();
             gameLost = processChoice(choice);
+            gameWon = currentTown.userWon();
             //currentTown.resetPrintMessage();
         }
         if (gameLost) {
             System.out.println("You lost all your money and went into debt! You Lose!");
+        }
+        if (gameWon) {
+            System.out.println("Congratulations, you have found the last of the three treasures, you win!");
         }
     }
 
