@@ -91,6 +91,7 @@ public class Shop {
         str += "Horse: "  + Color.ANSI_RESET + HORSE_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         str += "Boat: "  + Color.ANSI_RESET + BOAT_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         str += "Boots: "  + Color.ANSI_RESET + BOOTS_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        str += "Shovel: "  + Color.ANSI_RESET + SHOVEL_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         return str;
     }
 
