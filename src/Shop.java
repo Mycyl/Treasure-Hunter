@@ -15,6 +15,7 @@ public class Shop {
     private static final int BOAT_COST = 20;
     private static final int BOOTS_COST = 15;
     private static final int SHOVEL_COST = 8;
+    private static final int SWORD_COST = 0;
 
 
 
@@ -24,15 +25,17 @@ public class Shop {
     // instance variables
     private double markdown;
     private Hunter customer;
+    private boolean samuraiMode;
 
     /**
      * The Shop constructor takes in a markdown value and leaves customer null until one enters the shop.
      *
      * @param markdown Percentage of markdown for selling items in decimal format.
      */
-    public Shop(double markdown) {
+    public Shop(double markdown, boolean samuraiMode) {
         this.markdown = markdown;
         customer = null; // customer is set in the enter method
+        this.samuraiMode = samuraiMode;
     }
 
     /**
@@ -51,7 +54,7 @@ public class Shop {
             System.out.print("What're you lookin' to buy? ");
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
-            if (cost == 0) {
+            if (cost == 0 && !samuraiMode) {
                 System.out.println("We ain't got none of those.");
             } else {
                 System.out.print("It'll cost you " + cost + " gold. Buy it (y/n)? ");
@@ -91,6 +94,9 @@ public class Shop {
         str += "Horse: "  + Color.ANSI_RESET + HORSE_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         str += "Boat: "  + Color.ANSI_RESET + BOAT_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         str += "Boots: "  + Color.ANSI_RESET + BOOTS_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        if (samuraiMode) {
+            str += "Sword: "  + Color.ANSI_RESET + SWORD_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        }
         return str;
     }
 
@@ -101,11 +107,20 @@ public class Shop {
      */
     public void buyItem(String item) {
         int costOfItem = checkMarketPrice(item, true);
-        if (customer.buyItem(item, costOfItem)) {
-            System.out.println("Ye' got yerself a " + item + ". Come again soon.");
+        if (!samuraiMode) {
+            if (customer.buyItem(item, costOfItem)) {
+                System.out.println("Ye' got yerself a " + item + ". Come again soon.");
+            } else {
+                System.out.println("Hmm, either you don't have enough gold or you've already got one of those!");
+            }
         } else {
-            System.out.println("Hmm, either you don't have enough gold or you've already got one of those!");
+            if (customer.buyItem(item, costOfItem, true)) {
+                System.out.println("Ye' got yerself a " + item + ". Come again soon.");
+            } else {
+                System.out.println("Hmm, either you don't have enough gold or you've already got one of those!");
+            }
         }
+
     }
 
     /**

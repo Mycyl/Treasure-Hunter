@@ -147,7 +147,7 @@ public class Town {
      * The chances of finding a fight and winning the gold are based on the toughness of the town.<p>
      * The tougher the town, the easier it is to find a fight, and the harder it is to win one.
      */
-    public boolean lookForTrouble() {
+    public boolean lookForTrouble(boolean hasSword) {
         double noTroubleChance;
         if (toughTown) {
             noTroubleChance = 0.66;
@@ -159,7 +159,7 @@ public class Town {
         } else {
             printMessage = Color.ANSI_RED + "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n" + Color.ANSI_RESET;
             int goldDiff = (int) (Math.random() * 10) + 1;
-            if (Math.random() > noTroubleChance) {
+            if (Math.random() > noTroubleChance || hasSword) {
                 printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold.";
                 printMessage += "\nYou won the brawl and receive " + Color.ANSI_YELLOW + goldDiff + " gold." +Color.ANSI_RESET;
                 hunter.changeGold(goldDiff);
@@ -185,31 +185,6 @@ public class Town {
     public boolean hasDugInTown(){
         return this.hasDugInCurrentTown;
     }
-
-//    public String digForGold() {
-//        setDugInTown(true);
-//        if (!hunter.hasItemInKit("shovel")) {
-//            return "You can't dig for gold witout a shovel.";
-//        }
-//        if (hasDugInTown()) {
-//            return "You already dug for gold in this town.";
-//        }
-////        Random randomNum = new Random();
-////        double rnd = Math.random();
-////        double rnd2 = Math.random();
-////        if (hunter.hasItemInKit("shovel")) {
-////            if (rnd > 0.5) {
-////                int goldAmount = randomNum.nextInt(20);
-////                hunter.changeGold(goldAmount);
-////                return "You dug up" + goldAmount + "gold";
-//            } else {
-//                return "You dug but only found dirt.";
-//            }
-//        } else {
-//            return "You can't dig for gold without a shovel";
-//        }
-//
-//    }
 
 
     public String infoString() {

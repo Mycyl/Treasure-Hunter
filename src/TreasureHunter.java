@@ -25,6 +25,7 @@ public class TreasureHunter {
     private boolean gameWon;
     private boolean normalMode;
     private boolean easyMode;
+    private boolean samuraiMode;
 
 
     /**
@@ -74,6 +75,8 @@ public class TreasureHunter {
             easyMode = true;
         } else if (option.equals("n")) {
             normalMode = true;
+        } else if (option.equals("s")) {
+            samuraiMode = true;
         }
 
 
@@ -87,6 +90,8 @@ public class TreasureHunter {
         } else if (easyMode) {
             hunter = new Hunter(name, 40);
         } else if (normalMode) {
+            hunter = new Hunter (name, 30);
+        } else if (samuraiMode) {
             hunter = new Hunter (name, 30);
         }
     }
@@ -109,7 +114,7 @@ public class TreasureHunter {
             toughness = 0.9;
             markdown = 0.9;
         } else if (easyMode) {
-            toughness = 0.4;
+            toughness = 0.2;
             markdown = 1;
         }
 
@@ -117,7 +122,7 @@ public class TreasureHunter {
         // note that we don't need to access the Shop object
         // outside of this method, so it isn't necessary to store it as an instance
         // variable; we can leave it as a local variable
-        Shop shop = new Shop(markdown);
+        Shop shop = new Shop(markdown, samuraiMode);
 
 
         // creating the new Town -- which we need to store as an instance
@@ -190,7 +195,7 @@ public class TreasureHunter {
                 enterTown();
             }
         } else if (choice.equals("l")) {
-            boolean gameLost = currentTown.lookForTrouble();
+            boolean gameLost = currentTown.lookForTrouble(hunter.hasSword());
             if (gameLost) {
                 return true;
             }
@@ -199,10 +204,6 @@ public class TreasureHunter {
         } else if (choice.equals("h")) {
             currentTown.searchForTreasure();
         }else {
-//        } else if (choice.equals("d")){
-//            System.out.println(currentTown.digForGold());
-//        }
-        else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
         return false;

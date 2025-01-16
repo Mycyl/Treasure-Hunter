@@ -10,6 +10,7 @@ public class Hunter {
     private String hunterName;
     private String[] kit;
     private int gold;
+    private boolean samuraiMode = false;
 
 
     /**
@@ -20,8 +21,15 @@ public class Hunter {
      */
     public Hunter(String hunterName, int startingGold) {
         this.hunterName = hunterName;
-        kit = new String[6]; // only 5 possible items can be stored in kit
+        kit = new String[8]; // only 5 possible items can be stored in kit
         gold = startingGold;
+    }
+
+    public Hunter(String hunterName, int startingGold, boolean samuraiMode) {
+        this.hunterName = hunterName;
+        kit = new String[8]; // only 5 possible items can be stored in kit
+        gold = startingGold;
+        this.samuraiMode = samuraiMode;
     }
 
 
@@ -32,7 +40,6 @@ public class Hunter {
         addItem("horse");
         addItem("boat");
         addItem("boots");
-
     }
 
 
@@ -64,7 +71,25 @@ public class Hunter {
      * @return true if the item is successfully bought.
      */
     public boolean buyItem(String item, int costOfItem) {
-        if (costOfItem == 0 || gold < costOfItem || hasItemInKit(item)) {
+        if (costOfItem == 0|| gold < costOfItem || hasItemInKit(item)) {
+            return false;
+        }
+        gold -= costOfItem;
+        addItem(item);
+        return true;
+    }
+
+    public boolean hasSword () {
+        for (int i = 0; i < kit.length; i++) {
+            if (kit[i].equals("sword")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean buyItem(String item, int costOfItem, boolean samuraiMode) {
+        if (hasItemInKit(item)) {
             return false;
         }
         gold -= costOfItem;
