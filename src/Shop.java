@@ -97,6 +97,7 @@ public class Shop {
         if (samuraiMode) {
             str += "Sword: "  + Color.ANSI_RESET + SWORD_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         }
+        str += "Shovel: "  + Color.ANSI_RESET + SHOVEL_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         return str;
     }
 

@@ -203,7 +203,9 @@ public class TreasureHunter {
             System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
         } else if (choice.equals("h")) {
             currentTown.searchForTreasure();
-        }else {
+        } else if (choice.equals("d")){
+            currentTown.digForGold();
+        } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
         return false;
