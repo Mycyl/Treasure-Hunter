@@ -146,15 +146,13 @@ public class TreasureHunter {
      */
     private void showMenu() {
         String choice = "";
+        OutputWindow window = new OutputWindow(); // only want one OutputWindow object
         while (!choice.equals("x")) {
             System.out.println();
-            System.out.println(currentTown.getLatestNews());
             if (gameLost || gameWon) {
+                System.out.println(currentTown.getLatestNews());
                 break;
             }
-            System.out.println("***");
-            System.out.println(hunter.infoString());
-            System.out.println(currentTown.infoString());
             System.out.println("(B)uy something at the shop.");
             System.out.println("(S)ell something at the shop.");
             System.out.println("(E)xplore surrounding terrain.");
@@ -164,11 +162,17 @@ public class TreasureHunter {
             System.out.println("(H)unt for treasure.");
             System.out.println("Give up the hunt and e(X)it.");
             System.out.println();
+            System.out.println("***");
+            System.out.println(hunter.infoString());
+            System.out.println(currentTown.infoString());
+            System.out.println("***");
+            System.out.println();
+            System.out.println(currentTown.getLatestNews());
+            System.out.println();
             System.out.print("What's your next move? ");
             choice = SCANNER.nextLine().toLowerCase();
             gameLost = processChoice(choice);
             gameWon = currentTown.userWon();
-            //currentTown.resetPrintMessage();
         }
         if (gameLost) {
             System.out.println("You lost all your money and went into debt! You Lose!");
