@@ -81,6 +81,9 @@ public class Hunter {
 
     public boolean hasSword () {
         for (int i = 0; i < kit.length; i++) {
+            if (kit[i] == null) {
+                break;
+            }
             if (kit[i].equals("sword")) {
                 return true;
             }

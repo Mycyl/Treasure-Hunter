@@ -53,7 +53,7 @@ public class Shop {
             System.out.println(inventory());
             System.out.print("What're you lookin' to buy? ");
             String item = SCANNER.nextLine().toLowerCase();
-            int cost = checkMarketPrice(item, true);
+            int cost = (customer.hasSword()) ? 0 : checkMarketPrice(item, true);
             if (cost == 0 && !samuraiMode) {
                 System.out.println("We ain't got none of those.");
             } else {
@@ -98,6 +98,9 @@ public class Shop {
             str += "Sword: "  + Color.ANSI_RESET + SWORD_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
         }
         str += "Shovel: "  + Color.ANSI_RESET + SHOVEL_COST + Color.ANSI_YELLOW + " gold\n"  + Color.ANSI_RESET;
+        if (customer.hasSword()) {
+            str += "Please take anything you want for free! Don't use your sword! (Cost is 0)";
+        }
         return str;
     }
 
@@ -107,7 +110,7 @@ public class Shop {
      * @param item The item being bought.
      */
     public void buyItem(String item) {
-        int costOfItem = checkMarketPrice(item, true);
+        int costOfItem = (customer.hasSword()) ? 0 : checkMarketPrice(item, true);
         if (!samuraiMode) {
             if (customer.buyItem(item, costOfItem)) {
                 System.out.println("Ye' got yerself a " + item + ". Come again soon.");
